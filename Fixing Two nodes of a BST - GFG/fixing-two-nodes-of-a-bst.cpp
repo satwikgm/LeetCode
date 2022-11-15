@@ -112,36 +112,44 @@ struct Node
 */
 
 class Solution {
+
   public:
-    void in(Node* root , vector<int> &v)
+    Node* prev=new Node(INT_MIN);;
+    Node* first=NULL;
+    Node* middle=NULL;
+    Node* last=NULL;
+    void in(Node* root)
     {
         if(root)
         {
-            in(root->left,v);
-            v.push_back(root->data);
-            in(root->right,v);
-        }
-    }
-    void fun(Node* root , vector<int> v , int &c)
-    {
-        if(root)
-        {
-            fun(root->left,v,c);
-            if(root->data!=v[c])
+            in(root->left);
+            if(prev!=NULL && root->data < prev->data)
             {
-                root->data = v[c];
+                if(!first)
+                {
+                    first=prev;
+                    middle=root;
+                }
+                else
+                {
+                    last=root;
+                }
             }
-            c++;
-            fun(root->right,v,c);
+            prev=root;
+            in(root->right);
         }
     }
     void correctBST( struct Node* root )
     {
-        vector<int> v;
-        in(root,v);
-        sort(v.begin(),v.end());
-        int c=0;
-        fun(root,v,c);
+        in(root);
+        if(first && last)
+        {
+            swap(first->data,last->data);
+        }
+        else
+        {
+            swap(first->data,middle->data);
+        }
     }
 };
 
