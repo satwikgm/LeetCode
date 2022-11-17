@@ -99,18 +99,30 @@ void inorder(struct Node* root)
 class Solution
 {
     public:
-    Node* prev=NULL;
     void flatten(Node *root)
     {
         if(!root)
         {
             return;
         }
-        flatten(root->right);
-        flatten(root->left);
-        root->right=prev;
-        root->left=NULL;
-        prev=root;
+        stack<Node*> s;
+        s.push(root);
+        while(!s.empty())
+        {
+            Node* curr = s.top();
+            s.pop();
+            if(curr->right)
+            {
+                s.push(curr->right);
+            }
+            if(curr->left)
+            {
+                s.push(curr->left);
+            }
+            if(!s.empty())
+                curr->right = s.top();
+            curr->left = NULL;
+        }
     }
 };
 
