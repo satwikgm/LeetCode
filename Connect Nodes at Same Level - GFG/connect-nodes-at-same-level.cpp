@@ -153,14 +153,6 @@ class Solution
            {
                Node* curr = q.front();
                q.pop();
-               if(curr->left)
-               {
-                   q.push(curr->left);
-               }
-               if(curr->right)
-               {
-                   q.push(curr->right);
-               }
                if(i==count-1)
                {
                    curr->nextRight=NULL;
@@ -168,6 +160,14 @@ class Solution
                else
                {
                    curr->nextRight=q.front();
+               }
+               if(curr->left)
+               {
+                   q.push(curr->left);
+               }
+               if(curr->right)
+               {
+                   q.push(curr->right);
                }
            }
        }
