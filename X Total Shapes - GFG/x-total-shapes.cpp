@@ -18,8 +18,8 @@ class Solution
         int m=grid.size();
         int n=grid[0].size();
         
-        vector<int> rowVar{-1,0,1,0};
-        vector<int> colVar{0,1,0,-1};
+        vector<int> rowVar{-1,1,0,0};
+        vector<int> colVar{0,0,1,-1};
         
         while(!q.empty())
         {
