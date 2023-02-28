@@ -10,23 +10,24 @@ class Solution
     public:
     void sort012(int a[], int n)
     {
-        unordered_map<int,int> m;
-        for(int i=0;i<n;i++)
+        int l=0,m=0,h=n-1;
+        while(m<=h)
         {
-            m[a[i]]++;
-        }
-        int i=0;
-        for(int x=0;x<m[0];x++)
-        {
-            a[i++]=0;
-        }
-        for(int x=0;x<m[1];x++)
-        {
-            a[i++]=1;
-        }
-        for(int x=0;x<m[2];x++)
-        {
-            a[i++]=2;
+            if(a[m]==0)
+            {
+                swap(a[m],a[l]);
+                l++;
+                m++;
+            }
+            else if(a[m]==1)
+            {
+                m++;
+            }
+            else
+            {
+                swap(a[h],a[m]);
+                h--;
+            }
         }
     }
     
