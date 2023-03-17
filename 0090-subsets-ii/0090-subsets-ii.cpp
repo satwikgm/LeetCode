@@ -4,7 +4,6 @@ public:
     {
         if(ind==nums.size())
         {
-            sort(v.begin(),v.end());
             ans.insert(v);
             return;
         }
@@ -15,6 +14,7 @@ public:
     }
     vector<vector<int>> subsetsWithDup(vector<int>& nums) 
     {
+        sort(nums.begin(),nums.end());
         set<vector<int>> ans;
         vector<int> v;
         fun(0,nums,ans,v);
