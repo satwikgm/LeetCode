@@ -1,60 +1,84 @@
-class TrieNode {
+class Node 
+{
 public:
-    TrieNode* child[26];
-    bool isEnd;
-    TrieNode() {
-        isEnd=false;
-        for(int i=0;i<26;i++)
-        {
-            child[i]=NULL;
-        }
+    Node* links[26];
+    bool flag=false;
+    
+    // is this charecter ch already linked to the current node we are at
+    bool containsKey(char ch)
+    {
+        return links[ch-'a'] != NULL;        
+    }
+    
+    // attach ch to the current node we are at
+    void put(char ch , Node* node)
+    {
+        links[ch-'a'] = node;
+    }
+    
+    Node* get(char ch)
+    {
+        return links[ch-'a'];
+    }
+    
+    void setEnd()
+    {
+        flag = true;
+    }
+    
+    bool isEnd()
+    {
+        return flag;
     }
 };
+
 class Trie {
+private: Node* root;
+
 public:
-    TrieNode* root;
     Trie() {
-        root = new TrieNode();
+        root = new Node();        
     }
     
-    void insert(string word) {
-        TrieNode* curr = root;
+    // Insert a word into trie
+    void insert(string word) 
+    {
+        Node* node = root;
         for(int i=0;i<word.size();i++)
         {
-            int index = word[i]-'a';
-            if(!curr->child[index]) 
+            if(!node->containsKey(word[i]))
             {
-                curr->child[index] = new TrieNode();
+                node->put(word[i] , new Node());
             }
-            curr = curr->child[index];
+            node = node->get(word[i]);
         }
-        curr->isEnd=true;
+        node->setEnd();
     }
     
-    bool search(string word) {
-        TrieNode* curr = root;
+    bool search(string word) 
+    {
+        Node* node = root;
         for(int i=0;i<word.size();i++)
         {
-            int index = word[i]-'a';
-            if(!curr->child[index])
+            if(!node->containsKey(word[i]))
             {
                 return false;
             }
-            curr = curr->child[index];
+            node = node->get(word[i]);
         }
-        return curr->isEnd;
+        return node->isEnd();
     }
     
-    bool startsWith(string prefix) {
-        TrieNode* curr = root;
+    bool startsWith(string prefix) 
+    {
+        Node* node = root;
         for(int i=0;i<prefix.size();i++)
         {
-            int index = prefix[i]-'a';
-            if(!curr->child[index])
+            if(!node->containsKey(prefix[i]))
             {
                 return false;
             }
-            curr = curr->child[index];
+            node = node->get(prefix[i]);
         }
         return true;
     }
