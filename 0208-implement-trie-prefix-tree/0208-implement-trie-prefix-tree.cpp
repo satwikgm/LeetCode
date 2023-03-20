@@ -1,84 +1,58 @@
-class Node 
-{
+class TrieNode {
 public:
-    Node* links[26];
-    bool flag=false;
-    
-    // is this charecter ch already linked to the current node we are at
-    bool containsKey(char ch)
-    {
-        return links[ch-'a'] != NULL;        
-    }
-    
-    // attach ch to the current node we are at
-    void put(char ch , Node* node)
-    {
-        links[ch-'a'] = node;
-    }
-    
-    Node* get(char ch)
-    {
-        return links[ch-'a'];
-    }
-    
-    void setEnd()
-    {
-        flag = true;
-    }
-    
-    bool isEnd()
-    {
-        return flag;
+    TrieNode* children[26];
+    bool isLeaf;
+    TrieNode() {
+        for(int i=0;i<26;i++) {
+            children[i] = NULL;
+        }
+        isLeaf = false;
     }
 };
 
 class Trie {
-private: Node* root;
-
+private:
+    TrieNode* root;
 public:
     Trie() {
-        root = new Node();        
+        root = new TrieNode();
     }
     
-    // Insert a word into trie
-    void insert(string word) 
-    {
-        Node* node = root;
+    void insert(string word) {
+        TrieNode* curr = root;
         for(int i=0;i<word.size();i++)
         {
-            if(!node->containsKey(word[i]))
+            if(curr->children[word[i] - 'a' ] == NULL)
             {
-                node->put(word[i] , new Node());
+                curr->children[word[i] - 'a'] = new TrieNode();
             }
-            node = node->get(word[i]);
+            curr = curr->children[word[i] - 'a'];
         }
-        node->setEnd();
+        curr->isLeaf = true;
     }
     
-    bool search(string word) 
-    {
-        Node* node = root;
+    bool search(string word) {
+        TrieNode* curr = root;
         for(int i=0;i<word.size();i++)
         {
-            if(!node->containsKey(word[i]))
+            if(!curr->children[word[i] - 'a'])
             {
                 return false;
             }
-            node = node->get(word[i]);
+            curr = curr->children[word[i]-'a'];
         }
-        return node->isEnd();
+        return curr->isLeaf;
     }
     
-    bool startsWith(string prefix) 
-    {
-        Node* node = root;
+    bool startsWith(string prefix) {
+        TrieNode* curr = root;
         for(int i=0;i<prefix.size();i++)
         {
-            if(!node->containsKey(prefix[i]))
+            if(!curr->children[prefix[i] - 'a'])
             {
                 return false;
             }
-            node = node->get(prefix[i]);
+            curr = curr->children[prefix[i]-'a'];
         }
         return true;
     }
