@@ -8,7 +8,7 @@ public:
         ll i=0,j=0;
         while(j<n)
         {
-            if(j<n && nums[j]!=0)
+            if(nums[j]!=0)
             {
                 while(j<n && nums[j]!=0)
                 {
