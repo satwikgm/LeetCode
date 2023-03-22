@@ -1,49 +1,38 @@
 class Solution {
 public:
-    bool hasSubsequence(string s , string p)
+    int rem[100001]={};
+    bool hasSubsequence(string s , string p , vector<int> removables , int k)
     {
-        int j=p.size()-1;
-        for(int i=s.size()-1;i>=0;i--)
+        memset(rem,0,sizeof(rem));
+        for(int i=0;i<k;i++)
         {
+            rem[removables[i]]=1;  // mark this index as removed
+        }
+        int n=s.size() , m=p.size() , j=0;
+        for(int i=0;i<n && j<m;i++)
+        {
+            if(rem[i])
+            {
+                continue;
+            }
             if(s[i] == p[j])
             {
-                j--;
-            }
-            if(j<0)
-            {
-                return 1;
+                j++; 
             }
         }
-        return j<0;
+        return j==m;  // if j reaches m => p exists in s even after removal
     }
-    string removeElements(string s , vector<int> &removables , int idx)
-    {
-        unordered_set<int> st;
-        for(int i=0;i<idx;i++)
-        {
-            st.insert(removables[i]);
-        }
-        string ans="";
-        for(int i=0;i<s.size();i++)
-        {
-            if(st.find(i) == st.end())
-            {
-                ans+=s[i];
-            }
-        }
-        return ans;
-    }
+    
     int maximumRemovals(string s, string p, vector<int>& removable) 
     {
         int l=0 , h=removable.size();
-        int m , ans;
+        int m , return_value;
         while(l<=h)
         {
             m=(l+h)/2;
-            string ans = removeElements(s,removable,m);
-            if(hasSubsequence(ans,p))
+            if(hasSubsequence(s,p,removable,m))
             {
-                ans=m;
+                return_value=m;
                 l=m+1;
             }
             else
@@ -51,6 +40,6 @@ public:
                 h=m-1;
             }
         }
-        return h;
+        return return_value;
     }
 };
