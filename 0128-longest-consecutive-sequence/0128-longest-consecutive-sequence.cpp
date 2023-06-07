@@ -5,19 +5,17 @@ public:
         if(nums.size()<=1)
             return nums.size();
         sort(nums.begin(),nums.end());
-        int prev=nums[0];
         int ans=1,temp_ans=1;
         for(int i=1;i<nums.size();i++)
         {
-            if(nums[i] == prev+1)
+            if(nums[i] == nums[i-1]+1)
             {
                 temp_ans++;
             }
-            else if(nums[i] != prev)
+            else if(nums[i] != nums[i-1])
             {
                 temp_ans=1;
             }
-            prev=nums[i];
             ans = max(ans , temp_ans);
         }
         return ans;
