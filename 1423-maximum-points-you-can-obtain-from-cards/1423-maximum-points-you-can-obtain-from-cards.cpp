@@ -13,9 +13,8 @@ public:
         ans=sum;
         while(i>=0)
         {
-            sum -= cardPoints[i];
+            sum = sum - cardPoints[i] + cardPoints[j];
             i--;
-            sum += cardPoints[j];
             j--;
             ans = max(ans , sum);
         }
