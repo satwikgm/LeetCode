@@ -14,7 +14,7 @@ public:
         {
             string s1 = s.substr(0,i+1);
             string s2 = s.substr(i+1);
-            if(fun(s2,target-stoi(s1)))
+            if(fun(s2 , target-stoi(s1)))
             {
                 return 1;
             }
