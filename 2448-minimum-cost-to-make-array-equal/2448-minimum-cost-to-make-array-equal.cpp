@@ -15,7 +15,7 @@ public:
         ll n=nums.size();
         
         ll l = 1;
-        ll h = 1000000;
+        ll h = *max_element(nums.begin(),nums.end());
         
         ll m,ans=fun(nums,cost,h);
         
