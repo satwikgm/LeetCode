@@ -6,42 +6,42 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in an undirected graph.
-    bool fun(vector<int> adj[] , int s , bool visited[] , int par)
+    bool fun(vector<int> adj[] , int s , bool vis[] , int par , int V)
     {
-        visited[s]=1;
+        vis[s]=1;
         for(auto it : adj[s])
         {
-            if(!visited[it])
+            if(!vis[it])
             {
-                if(fun(adj,it,visited,s))
+                vis[it]=1;
+                if(fun(adj,it,vis,s,V))
                 {
-                    return true;
+                    return 1;
                 }
             }
             else if(it != par)
             {
-                return true;
+                return 1;
             }
         }
-        return false;
+        return 0;
     }
     bool isCycle(int V, vector<int> adj[]) 
     {
-        bool visited[V];
-        memset(visited,0,sizeof(visited));
-        
+        bool vis[V];
+        memset(vis,0,sizeof(vis));
         for(int i=0;i<V;i++)
         {
-            if(!visited[i])
+            if(!vis[i])
             {
-                if(fun(adj,i,visited,-1))
+                vis[i]=1;
+                if(fun(adj,i,vis,-1,V))
                 {
-                    return true;
+                    return 1;
                 }
             }
         }
-        
-        return false;
+        return 0;
     }
 };
 
