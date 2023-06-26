@@ -2,6 +2,7 @@ class Solution {
 public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) 
     {
+        set<vector<int>> st;
         vector<vector<int>> ans;
         sort(nums.begin(),nums.end());
         int n=nums.size();
@@ -23,7 +24,7 @@ public:
                 {
                     if(nums[s]+nums[e]==x)
                     {
-                        ans.push_back({nums[i],nums[j],nums[s],nums[e]});
+                        st.insert({nums[i],nums[j],nums[s],nums[e]});
                         while(s+1<n && nums[s]==nums[s+1])
                         {
                             s++;
@@ -45,6 +46,10 @@ public:
                     }
                 }
             }
+        }
+        for(auto it : st)
+        {
+            ans.push_back(it);
         }
         return ans;
     }
