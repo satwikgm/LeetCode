@@ -5,34 +5,25 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-private:
-    int fun(vector<int> &h , int n , int i)
-    {
-        if(i>=n-1)
-        {
-            return 0;
-        }
-        if(dp[i]!=-1)
-        {
-            return dp[i];
-        }
-        int mx1=INT_MAX , mx2=INT_MAX;
-        if(i+1<n)
-        {
-            mx1=min(mx1,abs(h[i+1] - h[i]));
-        }
-        if(i+2<n)
-        {
-            mx2=min(mx2,abs(h[i+2] - h[i]));
-        }
-        return dp[i] = min(mx1+fun(h,n,i+1),mx2+fun(h,n,i+2));
-    }
 public:
-    int dp[100002];
+    int fun1(vector<int> &h , int n)
+    {
+        int dp[n];
+        dp[0]=0;
+        for(int i=1;i<n;i++)
+        {
+            dp[i] = dp[i-1] + abs(h[i]-h[i-1]);
+            if(i>1)
+            {
+                dp[i]=min(dp[i] , dp[i-2]+abs(h[i]-h[i-2]));
+            }
+        }
+        return dp[n-1];
+    }
     int minimumEnergy(vector<int>& height, int n) 
     {
-        memset(dp,-1,sizeof(dp));
-        return fun(height,n,0);
+        // memset(dp,-1,sizeof(dp));
+        return fun1(height,n);
     }
 };
 
