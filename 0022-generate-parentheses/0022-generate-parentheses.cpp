@@ -1,34 +1,32 @@
 class Solution {
 public:
-    // m => '('    n => ')'
-    void fun(vector<string> &ans , string s , int m , int n)
+    void fun(int open , int close ,int n , string s, vector<string> &ans)
     {
-        if(m==0 && n==0)
+        /*Base Case*/
+        if(open==n && close==n)
         {
             ans.push_back(s);
             return;
         }
-        if(m==n)
+        if(open==close)
         {
-            fun(ans , s + '(' , m-1 , n);
+            fun(open+1,close,n,s+'(',ans);
         }
-        else if(m==0)
+        else if(open==n)
         {
-            fun(ans , s+')' , m , n-1);
+            fun(open,close+1,n,s+')',ans);
         }
         else
         {
-            // pick (
-            fun(ans , s+'(' , m-1 , n);
-            // pick )
-            fun(ans , s+')' , m , n-1);
+            fun(open+1,close,n,s+'(',ans);
+            fun(open,close+1,n,s+')',ans);
         }
     }
     vector<string> generateParenthesis(int n) 
     {
         vector<string> ans;
-        string s;
-        fun(ans,s,n,n);
+        int open=0,close=0;
+        fun(open,close,n,"",ans);
         return ans;
     }
 };
