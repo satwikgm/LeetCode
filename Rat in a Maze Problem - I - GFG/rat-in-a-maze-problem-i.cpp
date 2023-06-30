@@ -9,55 +9,67 @@ using namespace std;
 // User function template for C++
 
 class Solution{
-public:
-    void fun(vector<vector<int>> &m , int n , int i , int j , vector<string> &ans , string s , bool vis[6][6])
+    public:
+    bool vis[6][6];
+    void fun(int i , int j , string v , vector<string> &ans , vector<vector<int>> &m , int n)
     {
+        if(i>=n || j>=n || i<0 || j<0)
+        {
+            return;
+        }
         if(i==n-1 && j==n-1)
         {
-            if(m[i][j] == 1)
-            {
-                ans.push_back(s);
-            }
+            ans.push_back(v);
             return;
         }
-        
-        if(m[i][j] == 0)
+        // Up
+        if(i-1 >= 0 && m[i-1][j]==1 && !vis[i-1][j])
         {
-            return;
+            v += "U";
+            vis[i-1][j]=1;
+            fun(i-1,j,v,ans,m,n);
+            v.pop_back();
+            vis[i-1][j]=0;
         }
-        else
+        // Down
+        if(i+1 < n && m[i+1][j]==1 && !vis[i+1][j])
         {
-            vis[i][j]=1;  
-            if(i-1 >= 0 && !vis[i-1][j])
-            {
-                fun(m,n,i-1,j,ans,s+"U",vis);
-            }
-            if(j-1 >= 0 && !vis[i][j-1])
-            {
-                fun(m,n,i,j-1,ans,s+"L",vis);
-            }
-            if(i+1 < n && !vis[i+1][j])
-            {
-                fun(m,n,i+1,j,ans,s+"D",vis);
-            }
-            if(j+1 < n && !vis[i][j+1])
-            {
-                fun(m,n,i,j+1,ans,s+"R",vis);
-            }
-            vis[i][j]=0;
+            v += "D";
+            vis[i+1][j]=1;
+            fun(i+1,j,v,ans,m,n);
+            v.pop_back();
+            vis[i+1][j]=0;
+        }
+        // Left
+        if(j-1 >= 0 && m[i][j-1]==1 && !vis[i][j-1])
+        {
+            v += "L";
+            vis[i][j-1]=1;
+            fun(i,j-1,v,ans,m,n);
+            v.pop_back();
+            vis[i][j-1]=0;
+        }
+        // Right
+        if(j+1 < n && m[i][j+1]==1 && !vis[i][j+1])
+        {
+            v += "R";
+            vis[i][j+1]=1;
+            fun(i,j+1,v,ans,m,n);
+            v.pop_back();
+            vis[i][j+1]=0;
         }
     }
     vector<string> findPath(vector<vector<int>> &m, int n) 
     {
-        vector<string> ans;
-        string s;
-        bool vis[6][6];
         memset(vis,0,sizeof(vis));
-        if(m[0][0] == 0)
+        vector<string> ans;
+        if(m[0][0]==0 || m[n-1][n-1]==0)
         {
-            return {};
+            return ans;
         }
-        fun(m,n,0,0,ans,s,vis);
+        string v;
+        vis[0][0]=1;
+        fun(0,0,v,ans,m,n);
         return ans;
     }
 };
