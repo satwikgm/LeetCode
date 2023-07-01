@@ -11,52 +11,45 @@
  */
 class Solution {
 public:
-    vector<TreeNode*> in;
-    void inord(TreeNode* root)
+    TreeNode* f = NULL , *m = NULL , *l = NULL;
+    TreeNode* prev = new TreeNode(INT_MIN);
+    void inorder(TreeNode* root)
     {
         if(root)
         {
-            inord(root->left);
-            in.push_back(root);
-            inord(root->right);
+            inorder(root->left);
+            if(prev->val > root->val)
+            {
+                if(!f)
+                {
+                    f = prev;
+                    m = root;
+                }
+                else
+                {
+                    l = root;
+                }
+            }
+            prev=root;
+            inorder(root->right);
         }
     }
     void swap(TreeNode* a , TreeNode* b)
     {
-        int t = a->val;
+        int t=a->val;
         a->val=b->val;
         b->val=t;
     }
     void recoverTree(TreeNode* root) 
     {
-        inord(root);
-        bool fl=0;
-        int ind1;
-        int ind2;
-        for(int i=0;i<in.size()-1;i++)
+        inorder(root);
+        if(f && l)
         {
-            if(in[i]->val > in[i+1]->val)
-            {
-                if(fl)
-                {
-                    ind2=i+1;
-                    break;
-                }
-                else
-                {
-                    ind1=i;
-                    ind2=i+1;
-                    fl=1;
-                }
-            }
-        }
-        if(fl)
-        {
-            swap(in[ind1],in[ind2]);
+            swap(f,l);
         }
         else
         {
-            swap(in[ind1] , in[ind2]);
+            swap(f,m);
         }
     }
 };
