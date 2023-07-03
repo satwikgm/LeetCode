@@ -1,22 +1,21 @@
 class Solution {
 public:
-    void fun(int ind , vector<int> &nums , vector<vector<int>> &ans , vector<int> v)
-    {
-        if(ind==nums.size())
-        {
-            ans.push_back(v);
-            return;
-        }
-        fun(ind+1,nums,ans,v);
-        v.push_back(nums[ind]);
-        fun(ind+1,nums,ans,v);
-        v.pop_back();
-    }
     vector<vector<int>> subsets(vector<int>& nums) 
     {
         vector<vector<int>> ans;
-        vector<int> v;
-        fun(0,nums,ans,v);
+        int n=nums.size();
+        for(int i=0;i<pow(2,n);i++)
+        {
+            vector<int> v;
+            for(int j=0;j<n;j++)
+            {
+                if(i & (1<<j))
+                {
+                    v.push_back(nums[j]);
+                }
+            }
+            ans.push_back(v);
+        }
         return ans;
     }
 };
