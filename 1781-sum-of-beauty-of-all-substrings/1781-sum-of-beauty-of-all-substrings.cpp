@@ -5,19 +5,24 @@ public:
         int ans=0;
         for(int i=0;i<s.size();i++)
         {
-            unordered_map<char,int> m;
+            int m[26];
+            memset(m,0,sizeof(m));
             int mx=INT_MIN;
             int mn=INT_MAX;
             for(int j=i;j<s.size();j++)
             {
-                m[s[j]]++;
-                mx = max(mx , m[s[j]]);
-                if(mn >= m[s[j]]-1)
+                m[s[j]-'a']++;
+                mx = max(mx , m[s[j]-'a']);
+                if(mn >= m[s[j]-'a']-1)
                 {
-                    mn = m[s[j]];
-                    for(auto it : m)
+                    mn = m[s[j]-'a'];
+                    for(int it=0;it<26;it++)
                     {
-                        mn = min(mn , it.second);
+                        if(m[it]==0)
+                        {
+                            continue;
+                        }
+                        mn = min(mn , m[it]);
                     }
                 }
                 ans += mx-mn;
