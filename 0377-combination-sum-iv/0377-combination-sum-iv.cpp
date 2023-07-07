@@ -6,9 +6,9 @@ public:
         {
             return 1;
         }
-        if(m.find(k) != m.end())
+        if(dp[k] != -1)
         {
-            return m[k];
+            return dp[k];
         }
         int ans=0;
         for(int i=0;i<nums.size();i++)
@@ -18,11 +18,12 @@ public:
                 ans += fun(nums,k-nums[i]);
             }
         }
-        return m[k] = ans;
+        return dp[k] = ans;
     }
-    unordered_map<int,int> m;
+    int dp[1001];
     int combinationSum4(vector<int>& nums, int target) 
     {
+        memset(dp,-1,sizeof(dp));
         return fun(nums,target);
     }
 };
