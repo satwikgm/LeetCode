@@ -11,31 +11,28 @@ class Solution
     #define pi pair<int,int>
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
-        vector<int> ans(V,1e9);
-        ans[S]=0;
-        
+        vector<int> ans(V,INT_MAX);
         priority_queue<pi,vector<pi>,greater<pi>> pq;
-        pq.push({0,S});
-        
+        pq.push({0,S});     // dis node
+        ans[S]=0;
         while(pq.size())
         {
             auto p = pq.top();
             pq.pop();
-            int dis = p.first;
             int node = p.second;
+            int dis = p.first;
+            // ans[node]=dis;
             for(auto it : adj[node])
             {
-                int edW = it[1];
-                int adjNode = it[0];
-                
-                if(dis + edW < ans[adjNode])
+                int nod = it[0];
+                int dist = it[1];
+                if(dis+dist < ans[nod])
                 {
-                    ans[adjNode] = dis+edW;
-                    pq.push({ans[adjNode] , adjNode});
+                    ans[nod] = dis+dist;
+                    pq.push({ans[nod] , nod});
                 }
             }
         }
-        
         return ans;
     }
 };
