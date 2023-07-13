@@ -8,38 +8,46 @@ using namespace std;
 // User function Template for C++
 class Solution {
   public:
+    #define pi pair<int,int>
     vector<int> shortestPath(vector<vector<int>>& edges, int N,int M, int src)
     {
-        bool visited[N];
-        memset(visited,0,sizeof(visited));
-        vector<int> dist(N,-1);
-        queue<pair<int,int>> q;
-        q.push({src,0});
-        visited[src]=1;
         vector<int> adj[N];
+        bool vis[N]={0};
         for(auto it : edges)
         {
             adj[it[0]].push_back(it[1]);
             adj[it[1]].push_back(it[0]);
         }
-        while(!q.empty())
+        vector<int> ans(N,1e9);
+        priority_queue<pi,vector<pi>,greater<pi>> pq;
+        pq.push({0,src});
+        vis[src]=1;
+        ans[src]=0;
+        vis[src]=1;
+        while(pq.size())
         {
-            pair<int,int> p = q.front();
-            q.pop();
-            int node = p.first;
-            int dis = p.second;
-            visited[node]=1;
-            dist[node]=dis;
+            auto p = pq.top();
+            pq.pop();
+            int dis = p.first;
+            int node = p.second;
+            ans[node]=dis;
             for(auto it : adj[node])
             {
-                if(!visited[it])
+                if(!vis[it])
                 {
-                    q.push({it,dis+1});
-                    visited[it]=1;
+                    vis[it]=1;
+                    pq.push({dis+1,it});
                 }
             }
         }
-        return dist;
+        for(int i=0;i<N;i++)
+        {
+            if(ans[i]==1e9)
+            {
+                ans[i]=-1;
+            }
+        }
+        return ans;
     }
 };
 
