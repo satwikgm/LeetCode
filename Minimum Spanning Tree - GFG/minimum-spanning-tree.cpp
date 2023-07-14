@@ -7,40 +7,36 @@ class Solution
 {
 	public:
 	//Function to find sum of weights of edges of the Minimum Spanning Tree.
-	#define pi pair<int,int>
+    #define pi pair<int,int>
     int spanningTree(int V, vector<vector<int>> adj[])
     {
-         priority_queue<pi,vector<pi>,greater<pi>> pq;
-         pq.push({0,0});
-         
-         bool visited[V];
-         memset(visited,0,sizeof(visited));
-         
-         int ans=0;
-         
-         while(!pq.empty())
-         {
-             auto p = pq.top();
-             pq.pop();
-             int weight = p.first;
-             int node = p.second;
-             if(visited[node])
-             {
-                 continue;
-             }
-             visited[node]=1;
-             ans += weight;
-             for(auto it : adj[node])
-             {
-                 int adjNode = it[0];
-                 int wt = it[1];
-                 if(!visited[adjNode])
-                 {
-                     pq.push({wt,adjNode});
-                 }
-             }
-         }
-         return ans;
+        int ans=0;
+        bool vis[V];
+        memset(vis,0,sizeof(vis));
+        int edges=0;
+        priority_queue<pi,vector<pi>,greater<pi>> pq;
+        pq.push({0,0});
+        while(pq.size())
+        {
+            auto p = pq.top();
+            int dis = p.first;
+            int node = p.second;
+            pq.pop();
+            if(vis[node])
+            {
+                continue;
+            }
+            ans += dis;
+            vis[node]=1;
+            for(auto it : adj[node])
+            {
+                int adjNode = it[0];
+                int wt = it[1];
+                if(!vis[adjNode])
+                    pq.push({wt,adjNode});
+            }
+        }
+        return ans;
     }
 };
 
