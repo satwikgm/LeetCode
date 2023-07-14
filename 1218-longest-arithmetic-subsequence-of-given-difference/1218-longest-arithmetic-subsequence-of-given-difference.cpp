@@ -2,13 +2,23 @@ class Solution {
 public:
     int longestSubsequence(vector<int>& arr, int difference) 
     {
-        int n=arr.size();
-        int ans=1;
-        unordered_map<int,int> m;
-        for(int i=n-1;i>=0;i--)
+        if(arr.size()==0)
         {
-            m[arr[i]] = 1+m[arr[i]+difference];
-            ans=max(ans,m[arr[i]]);
+            return 0;
+        }
+        int ans=1;
+        unordered_map<int,int> m;       // elem length of ap ending at it
+        for(int i=0;i<arr.size();i++)
+        {
+            if(m.find(arr[i]-difference) != m.end())
+            {
+                ans = max(ans , 1+m[arr[i] - difference]);
+                m[arr[i]] = 1+m[arr[i]-difference];
+            }
+            else
+            {
+                m[arr[i]] = 1;
+            }
         }
         return ans;
     }
