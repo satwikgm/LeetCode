@@ -49,8 +49,9 @@ class LRUCache
     void remove(Node* node)
     {
         m.erase(node->key);
-        node->next->prev = node->prev;
+        
         node->prev->next = node->next;
+        node->next->prev = node->prev;
     }
     int GET(int key)
     {
