@@ -8,36 +8,24 @@
  */
 class Solution {
 public:
-    ListNode *detectCycle(ListNode *head) 
-    {
-        if(!head)
-        {
-            return NULL;
-        }
-        ListNode *s=head , *f=head;
-        while(f && f->next)
-        {
+    ListNode *detectCycle(ListNode *head) {
+        ListNode* s=head , *f = head;
+        while(f && f->next) {
             s = s->next;
             f = f->next->next;
-            if(s == f)
-            {
+            if(s==f) {
                 break;
             }
-        }    
-        if(s!=f)
-        {
+        }
+        if(!f || !f->next) {
             return NULL;
         }
-        if(s==f && s->next==NULL && f->next==NULL)
+        f = head;
+        while(s != f)
         {
-            return NULL;
+            s = s->next;
+            f = f->next;
         }
-        s=head;
-        while(s!=f)
-        {
-            s=s->next;
-            f=f->next;
-        }
-        return f;
+        return s;
     }
 };
