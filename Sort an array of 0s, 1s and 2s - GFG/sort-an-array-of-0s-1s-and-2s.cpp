@@ -11,7 +11,7 @@ class Solution
     void sort012(int a[], int n)
     {
         int l=0,m=0,h=n-1;
-        while(m<=h)
+        while(m <= h)
         {
             if(a[m]==0)
             {
@@ -19,14 +19,12 @@ class Solution
                 l++;
                 m++;
             }
-            else if(a[m]==1)
+            else if(a[m]==2)
             {
-                m++;
+                swap(a[m],a[h--]);
             }
-            else
-            {
-                swap(a[h],a[m]);
-                h--;
+            else {
+                m++;
             }
         }
     }
