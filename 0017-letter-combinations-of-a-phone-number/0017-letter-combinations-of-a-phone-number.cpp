@@ -1,30 +1,28 @@
 class Solution {
 public:
     vector<string> v = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-    void fun(string digits , int ind , vector<string> &ans , string s)
-    {
-        if(ind >= digits.size())
-        {
-            ans.push_back(s);
+    void fun(int ind , string digits , string temp , vector<string> &ans) {
+        if(ind == digits.size()) {
+            ans.push_back(temp);
             return;
         }
-        string str = v[digits[ind] - '0'];
-        for(int i=0;i<str.size();i++)
-        {
-            s += str[i];
-            fun(digits , ind+1 , ans , s);
-            s.pop_back();
+        int vIndex = digits[ind] - '0';
+        string s = v[vIndex];
+        for(int i=0;i<s.size();i++) {
+            temp += s[i];
+            fun(ind+1,digits,temp,ans);
+            temp.pop_back();
         }
     }
     vector<string> letterCombinations(string digits) 
     {
-        if(digits == "")
+        if(digits=="")
         {
             return {};
         }
+        string temp;
         vector<string> ans;
-        string s="";
-        fun(digits , 0 , ans , s);
+        fun(0,digits,temp,ans);
         return ans;
     }
 };
