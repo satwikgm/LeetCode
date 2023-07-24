@@ -11,28 +11,38 @@
  */
 class Solution {
 public:
-    void fun(vector<string> &ans , string curr , TreeNode* root)
+    void fun(TreeNode* root , vector<string> &ans , string s)
     {
-        if(!root->left && !root->right)
-        {
-            ans.push_back(curr);
+        if(!root) {
             return;
         }
-        if(root->left)
-        {
-            fun(ans , curr + "->" +to_string(root->left->val) , root->left);
+        if(!root->left && !root->right) {
+            if(s=="") {
+                s += to_string(root->val);
+            } else {
+                s += "->";
+                s += to_string(root->val);
+            }
+            ans.push_back(s);
+            return;
         }
-        if(root->right)
-        {
-            fun(ans , curr + "->" + to_string(root->right->val) , root->right);
+        if(s=="") {
+            s += to_string(root->val);
+        } else {
+            s += "->";
+            s += to_string(root->val);
+        }
+        if(root->left) {
+            fun(root->left,ans,s);
+        }
+        if(root->right) {
+            fun(root->right,ans,s);
         }
     }
     vector<string> binaryTreePaths(TreeNode* root) 
     {
         vector<string> ans;
-        string curr;
-        curr += to_string(root->val);
-        fun(ans,curr,root);
+        fun(root,ans,"");
         return ans;
     }
 };
