@@ -1,66 +1,45 @@
 class Solution {
 public:
-    vector<vector<bool>> vis;
-    bool fun(vector<vector<char>> &board, string word, int i, int j, int ind)
+    bool vis[7][7];
+    // memset(vis,0,sizeof(vis));
+    bool fun(vector<vector<char>>& board , int i , int j , string word , int ind)
     {
-        int n=board.size();
-        int m=board[0].size();
+        int m=board.size();
+        int n=board[0].size();
+        int dx[] = {-1,1,0,0};
+        int dy[] = {0,0,-1,1};
         if(board[i][j] == word[ind])
         {
             vis[i][j]=1;
-            if(ind==word.size()-1)
+            if(ind == word.size()-1)
             {
                 return 1;
             }
-            if(i-1>=0 && !vis[i-1][j])
+            for(int k=0;k<4;k++)
             {
-                if(fun(board,word,i-1,j,ind+1))
+                int nr = i+dx[k];
+                int nc = j+dy[k];
+                if(nr>=0 && nc>=0 && nr<m && nc<n && !vis[nr][nc])
                 {
-                    return 1;
+                    if(fun(board,nr,nc,word,ind+1)) {
+                        return 1;
+                    }   
                 }
             }
-            if(j-1>=0 && !vis[i][j-1])
-            {
-                if(fun(board,word,i,j-1,ind+1))
-                {
-                    return 1;
-                }
-            }
-            if(i+1<n && !vis[i+1][j])
-            {
-                if(fun(board,word,i+1,j,ind+1))
-                {
-                    return 1;
-                }
-            }
-            if(j+1<m && !vis[i][j+1])
-            {
-                if(fun(board,word,i,j+1,ind+1))
-                {
-                    return 1;
-                }
-            }
-            // Backtrack
             vis[i][j]=0;
-            // return 0;
         }
         return 0;
     }
-    bool exist(vector<vector<char>>& board, string word) 
-    {
-        int n = board.size();
-        int m = board[0].size();
-        vis = vector<vector<bool>>(n, vector<bool>(m, false));
-        for(int i=0; i<n; i++)
-        {    
-            for(int j=0; j<m; j++)
-            {
-                if(fun(board, word, i, j, 0))
-                {
-                    return true;   
+    bool exist(vector<vector<char>>& board, string word) {
+        int m=board.size();
+        int n=board[0].size();
+        for(int i=0;i<m;i++) {
+            for(int j=0;j<n;j++) {
+                if(fun(board,i,j,word,0)) {
+                    return 1;
                 }
             }
         }
-        return false;
+        return 0;
     }
 };
