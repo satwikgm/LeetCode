@@ -1,38 +1,34 @@
 class Solution {
 public:
-    bool fun(vector<int> &dist , double hour , int m)
+    bool fun(vector<int> &dist , double hour , int speed)
     {
-        double sum=0;
-        for(int i=0;i<dist.size();i++)
-        {
-            double time = (double)(dist[i])/(double)(m);
-            if(i==dist.size()-1)
-            {
-                sum += time;
-                continue;
-            }
-            int t = time;
-            if(time>t)
-            {
-                sum += t+1;
-            }
-            else
-            {
-                sum+=t;
+        double hrs=0;
+        for(int i=0;i<dist.size();i++) {
+            double time = (double)(dist[i])/(double)(speed);
+            if(i==dist.size()-1) {
+                hrs += time;
+            } else {
+                int t=time;
+                if(time > t) {
+                    hrs += t+1;
+                } else {
+                    hrs += t;
+                }
             }
         }
-        return sum <= hour;
+        return hrs <= hour;
     }
     int minSpeedOnTime(vector<int>& dist, double hour) 
     {
-        int l=1,h=1e7,ans=-1;
+        int ans=-1;
+        double l=1 , h=1e7;
         while(l<=h)
         {
             int m=(l+h)/2;
             if(fun(dist,hour,m))
             {
-                h=m-1;
                 ans=m;
+                h=m-1;
             }
             else
             {
