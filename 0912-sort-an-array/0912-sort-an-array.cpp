@@ -1,42 +1,37 @@
 class Solution {
 public:
-    void merge(vector<int> &arr , int l , int m , int h)
+    void merge(vector<int> &a , int l , int m , int h)
     {
-        int i = l , j = m+1;
         vector<int> temp;
+        int i=l,j=m+1;
         while(i<=m && j<=h)
         {
-            if(arr[i] <= arr[j])
+            if(a[i] <= a[j])
             {
-                temp.push_back(arr[i++]);
+                temp.push_back(a[i++]);
             }
             else
             {
-                temp.push_back(arr[j++]);
+                temp.push_back(a[j++]);
             }
         }
-        while(i<=m) temp.push_back(arr[i++]);
-        while(j<=h) temp.push_back(arr[j++]);
+        while(i<=m) temp.push_back(a[i++]);
+        while(j<=h) temp.push_back(a[j++]);
         for(int i=l;i<=h;i++)
         {
-            arr[i]=temp[i-l];
+            a[i] = temp[i-l];
         }
     }
-    void mergeSort(vector<int> &arr , int l , int h)
+    void mergeSort(vector<int> &a , int l , int h)
     {
-        if(l>=h)
-        {
-            return;
-        }
-        int m=(l+h)/2;
-        mergeSort(arr,l,m);
-        mergeSort(arr,m+1,h);
-        merge(arr,l,m,h);
+        if(l>=h) return;
+        int m = (l+h)/2;
+        mergeSort(a,l,m);
+        mergeSort(a,m+1,h);
+        merge(a,l,m,h);
     }
-    vector<int> sortArray(vector<int>& nums) {
-        int n=nums.size();
-        int l=0 , h=n-1;
-        mergeSort(nums,l,h);
-        return nums;
+    vector<int> sortArray(vector<int>& a) {
+        mergeSort(a,0,a.size()-1);
+        return a;
     }
 };
